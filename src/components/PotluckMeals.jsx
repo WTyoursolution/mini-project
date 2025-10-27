@@ -16,13 +16,12 @@ export default function PotluckMeals() {
       meal_name: mealName,
       guest_name: guestName,
       serves: parseInt(serves),
-      kindOfDish: kindOfDish,
+      kind_of_dish: kindOfDish,
     };
 
     console.log(newMeal);
 
-    //Insert the new meal
-    await supabase.from("potluck_meals").insert(newMeal);
+    // Insert the new meal (single request)
     const { data, error } = await supabase
       .from("potluck_meals")
       .insert(newMeal);
