@@ -4,12 +4,8 @@ import supabase from "../utils/supabase";
 export default function PotluckMeals() {
   const [meals, setMeals] = useState([]);
 
-  function handleAddMeal(event) {
-    console.log(event);
-    console.log(event.target);
-    console.log(event.target.elements);
+  async function handleAddMeal(event) {
     event.preventDefault();
-    console.log("handle add meal submitted");
     //extract the forms data
     const mealName = event.target.elements.mealName.value;
     const guestName = event.target.elements.guestName.value;
@@ -19,12 +15,24 @@ export default function PotluckMeals() {
     const newMeal = {
       meal_name: mealName,
       guest_name: guestName,
-      serves: serves,
+      serves: parseInt(serves),
       kindOfDish: kindOfDish,
     };
 
     console.log(newMeal);
-    // we'll add the insert logic in the next step
+
+    //Insert the new meal
+    await supabase.from("potluck_meals").insert(newMeal);
+    const { data, error } = await supabase
+      .from("potluck_meals")
+      .insert(newMeal);
+    if (error) {
+      console.log("Error adding meal: " + error.message);
+      alert("Failed to add meal: " + error.message);
+    } else {
+      console.log("Meal added successfully!");
+      handleFetchMeals();
+    }
   }
 
   async function handleFetchMeals() {
