@@ -46,23 +46,31 @@ export default function Beverages() {
     }
   }
 
-  const drinksDisplay = [];
-
-  for (let i = 0; i < drinks.length; i++) {
-    drinksDisplay.push(
-      <li key={drinks[i].id}>
-        {drinks[i].beverage_name} by {drinks[i].guest_name} serves{" "}
-        {drinks[i].quantity} ( {drinks[i].type_of_drink} )
-      </li>
-    );
-  }
+  const drinksDisplay = (
+    <div className="row">
+      {drinks.map((drink) => (
+        <div key={drink.id} className="col-12 col-md-6 col-lg-4 mb-3">
+          <div className="card h-100 shadow-sm">
+            <div className="card-body">
+              <h5 className="card-title">{drink.beverage_name}</h5>
+              <h6 className="card-subtitle mb-2 text-muted">By {drink.guest_name}</h6>
+              <p className="card-text">Quantity: {drink.quantity}</p>
+              <span className="badge bg-info text-dark">{drink.type_of_drink}</span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 
   return (
     <>
-    <div className="border border-black mx-auto p-4" style={{ width: '500px', height: 'auto' }}>
+  <div className="container border border-black mx-auto p-4">
       <h1 className="text-center">Potluck Drinks</h1>
-      <button type="submit" className="btn btn-outline-primary" onClick={handleFetchDrinks}>Fetch Drinks</button>
-      <ul>{drinksDisplay}</ul>
+      
+    <p>*see what others are bringing here:</p>
+  <button type="submit" className="btn btn-outline-primary m-2" onClick={handleFetchDrinks}>Fetch Drinks</button>
+  {drinksDisplay}
 
       <div className="border border-black rounded p-3">
         <form onSubmit={handleAddDrinks}>

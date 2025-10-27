@@ -45,23 +45,31 @@ export default function Utensils() {
     }
   }
 
-  const utensilsDisplay = [];
-
-  for (let i = 0; i < utensils.length; i++) {
-    utensilsDisplay.push(
-      <li key={utensils[i].id}>
-        {utensils[i].item_name} by {utensils[i].guest_name} serves{" "}
-        {utensils[i].quantity} ( {utensils[i].item_type} )
-      </li>
-    );
-  }
+  const utensilsDisplay = (
+    <div className="row">
+      {utensils.map((item) => (
+        <div key={item.id} className="col-12 col-md-6 col-lg-4 mb-3">
+          <div className="card h-100 shadow-sm">
+            <div className="card-body">
+              <h5 className="card-title">{item.item_name}</h5>
+              <h6 className="card-subtitle mb-2 text-muted">By {item.guest_name}</h6>
+              <p className="card-text">Quantity: {item.quantity}</p>
+              <span className="badge bg-info text-dark">{item.item_type}</span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 
   return (
     <>
-    <div className="border border-black mx-auto p-4" style={{ width: '500px', height: 'auto' }}>
+  <div className="container border border-black mx-auto p-4">
       <h1 className="text-center">Potluck Utensils</h1>
-      <button type="submit" className="btn btn-outline-primary" onClick={handleFetchUtensils}>Fetch Utensils</button>
-      <ul>{utensilsDisplay}</ul>
+      
+     <p>*see what others are bringing here:</p>
+  <button type="submit" className="btn btn-outline-primary m-2" onClick={handleFetchUtensils}>Fetch Utensils</button>
+  {utensilsDisplay}
 
       <div className="border border-black rounded p-3">
         <form onSubmit={handleAddUtensils}>

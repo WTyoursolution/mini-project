@@ -46,25 +46,31 @@ export default function PotluckMeals() {
     }
   }
 
-  const mealsDisplay = [];
-
-  for (let i = 0; i < meals.length; i++) {
-    mealsDisplay.push(
-      <li key={meals[i].id}>
-        {meals[i].meal_name} by {meals[i].guest_name} serves {meals[i].serves} ({" "}
-        {meals[i].kind_of_dish} )
-      </li>
-    );
-  }
+  const mealsDisplay = (
+    <div className="row">
+      {meals.map((meal) => (
+        <div key={meal.id} className="col-12 col-md-6 col-lg-4 mb-3">
+          <div className="card h-100 shadow-sm">
+            <div className="card-body">
+              <h5 className="card-title">{meal.meal_name}</h5>
+              <h6 className="card-subtitle mb-2 text-muted">By {meal.guest_name}</h6>
+              <p className="card-text">Serves {meal.serves}</p>
+              <span className="badge bg-info text-dark">{meal.kind_of_dish}</span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 
   return (
     <>
-    <div className=" border border-black mx-auto p-4" style={{ width: '500px', height: 'auto' }}>
+  <div className="container border border-black mx-auto p-4">
       <h1 className="text-center">Potluck Meals</h1>
 
-      <p>*see what others are bringing here:</p>
-      <button type="submit" className="btn btn-outline-primary" onClick={handleFetchMeals}>Fetch Meals</button>
-      <ul>{mealsDisplay}</ul>
+  <p>*see what others are bringing here:</p>
+  <button type="submit" className="btn btn-outline-primary m-2" onClick={handleFetchMeals}>Fetch Meals</button>
+  {mealsDisplay}
 
       <div className="border border-black rounded p-3">
         <form onSubmit={handleAddMeal}>
